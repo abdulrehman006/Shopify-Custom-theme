@@ -1,0 +1,56 @@
+<article class="section main-article color-{{ section.settings.color_scheme }}">
+  <div class="page-width main-article__inner">
+    <header class="main-article__head">
+      <p class="overline">{{ article.published_at | date: '%B %d, %Y' }}</p>
+      <h1>{{ article.title }}</h1>
+      {%- if article.author and section.settings.show_author -%}<p class="main-article__author">{{ 'blogs.article.by' | t }} {{ article.author }}</p>{%- endif -%}
+    </header>
+    {%- if article.image -%}
+      <div class="main-article__hero"><img src="{{ article.image | image_url: width: 1600 }}" alt="{{ article.image.alt | default: article.title | escape }}" loading="eager" width="{{ article.image.width }}" height="{{ article.image.height }}"></div>
+    {%- endif -%}
+    <div class="rte main-article__body">{{ article.content }}</div>
+    {%- if blog.comments_enabled? -%}
+      <div class="main-article__comments">
+        <h2>{{ 'blogs.article.comments' | t }}</h2>
+        {%- for comment in article.comments -%}
+          <div class="comment"><p class="comment__author">{{ comment.author }}</p><div class="rte">{{ comment.content }}</div></div>
+        {%- endfor -%}
+        {%- form 'new_comment', article -%}
+          <div class="field"><label>Name</label><input type="text" name="comment[author]" required></div>
+          <div class="field"><label>Email</label><input type="email" name="comment[email]" required></div>
+          <div class="field"><label>Comment</label><textarea name="comment[body]" rows="4" required></textarea></div>
+          <button type="submit" class="btn">Post</button>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>
+{% stylesheet %}
+.main-article__inner { max-width: 760px; margin-inline: auto; }
+.main-article__head { text-align: center; margin-bottom: 32px; }
+.main-article__hero { margin: 0 -40px 40px; }
+.main-article__hero img { width: 100%; }
+.main-article__body { font-size: 1.05rem; }
+.comment { border-top: 1px solid var(--color-line); padding: 18px 0; }
+.comment__author { font-weight: 600; margin: 0 0 6px; }
+@media (max-width: 749px){ .main-article__hero { margin-inline: 0; } }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "Article",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}

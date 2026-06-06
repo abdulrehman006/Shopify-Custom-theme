@@ -1,0 +1,18 @@
+{%- liquid
+  assign target = product | default: variant
+  assign price = target.price
+  assign compare = target.compare_at_price
+  if product and product.price_varies and variant == nil
+    assign price = product.price_min
+  endif
+-%}
+<span class="price{% if compare > price %} price--on-sale{% endif %}">
+  {%- if compare > price -%}
+    <span class="price__compare">{{ compare | money }}</span>
+  {%- endif -%}
+  {%- if product.price_varies and variant == nil -%}
+    <span class="price__current">{{ 'products.product.from_price' | t: price: price | money }}</span>
+  {%- else -%}
+    <span class="price__current{% if compare > price %} price__sale{% endif %}">{{ price | money }}</span>
+  {%- endif -%}
+</span>

@@ -1,0 +1,31 @@
+<section class="section account">
+  <div class="page-width account__narrow">
+    <header class="section-heading"><h1>{{ 'customer.login.title' | t }}</h1></header>
+
+    <div id="recover" style="display:none">
+      <h2>{{ 'customer.recover.title' | t }}</h2>
+      <p>{{ 'customer.recover.subtext' | t }}</p>
+      {%- form 'recover_customer_password' -%}
+        {%- if form.posted_successfully? -%}<p class="newsletter__success">An email was sent if the account exists.</p>{%- endif -%}
+        <div class="field"><label>{{ 'customer.login.email' | t }}</label><input type="email" name="email" required></div>
+        <button type="submit" class="btn">{{ 'customer.recover.submit' | t }}</button>
+        <button type="button" class="link-underline" onclick="document.getElementById('recover').style.display='none';document.getElementById('login').style.display='block'" style="margin-left:16px;background:none;border:0">{{ 'customer.recover.cancel' | t }}</button>
+      {%- endform -%}
+    </div>
+
+    <div id="login">
+      {%- form 'customer_login' -%}
+        {{ form.errors | default_errors }}
+        <div class="field"><label>{{ 'customer.login.email' | t }}</label><input type="email" name="customer[email]" required></div>
+        <div class="field"><label>{{ 'customer.login.password' | t }}</label><input type="password" name="customer[password]"></div>
+        <button type="submit" class="btn" style="width:100%">{{ 'customer.login.submit' | t }}</button>
+        <p style="margin-top:16px"><button type="button" class="link-underline" onclick="document.getElementById('login').style.display='none';document.getElementById('recover').style.display='block'" style="background:none;border:0">{{ 'customer.login.forgot' | t }}</button></p>
+      {%- endform -%}
+      <p class="account__alt">{{ 'customer.login.create' | t }} &mdash; <a href="{{ routes.account_register_url }}" class="link-underline">{{ 'customer.register.submit' | t }}</a></p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Customer login", "settings": [] }
+{% endschema %}

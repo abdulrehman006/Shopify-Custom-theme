@@ -1,0 +1,22 @@
+<section class="section account">
+  <div class="page-width">
+    <header class="section-heading"><h1>{{ 'customer.orders.order' | t }} {{ order.name }}</h1><p>{{ order.created_at | date: '%B %d, %Y' }}</p></header>
+    <table class="account__orders">
+      <thead><tr><th>{{ 'cart.product' | t }}</th><th>{{ 'cart.price' | t }}</th><th>{{ 'cart.title' | t }}</th><th>{{ 'cart.total' | t }}</th></tr></thead>
+      <tbody>
+        {%- for line in order.line_items -%}
+          <tr><td>{{ line.title }}</td><td>{{ line.price | money }}</td><td>{{ line.quantity }}</td><td>{{ line.final_line_price | money }}</td></tr>
+        {%- endfor -%}
+      </tbody>
+      <tfoot>
+        <tr><td colspan="3">{{ 'cart.subtotal' | t }}</td><td>{{ order.subtotal_price | money }}</td></tr>
+        <tr><td colspan="3">{{ 'cart.total' | t }}</td><td>{{ order.total_price | money }}</td></tr>
+      </tfoot>
+    </table>
+    <p style="margin-top:24px"><a href="{{ routes.account_url }}" class="link-underline">&larr; {{ 'customer.account.title' | t }}</a></p>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Customer order", "settings": [] }
+{% endschema %}

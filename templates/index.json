@@ -1,0 +1,156 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "blocks": {
+        "b1": {
+          "type": "button",
+          "settings": {
+            "label": "Shop the Collection",
+            "style": "btn--light"
+          }
+        },
+        "b2": {
+          "type": "button",
+          "settings": {
+            "label": "The Monograms",
+            "style": "btn--ghost"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2"
+      ],
+      "settings": {
+        "height": "large",
+        "overline": "Silk Scarves",
+        "heading": "Vespera",
+        "subheading": "Hand-rolled silk squares, made in limited editions.",
+        "content_position": "center",
+        "text_color": "#ffffff",
+        "overlay_opacity": 30
+      }
+    },
+    "new_arrivals": {
+      "type": "featured-collection",
+      "settings": {
+        "overline": "New Season",
+        "heading": "New Arrivals",
+        "subtext": "The latest silk squares, finished entirely by hand.",
+        "products_to_show": 4,
+        "columns": 4,
+        "show_view_all": true,
+        "view_all_label": "Discover the collection"
+      }
+    },
+    "editorial": {
+      "type": "editorial-grid",
+      "blocks": {
+        "t1": {
+          "type": "tile",
+          "settings": {
+            "overline": "Signature",
+            "heading": "The Monogram",
+            "cta": "Shop monograms"
+          }
+        },
+        "t2": {
+          "type": "tile",
+          "settings": {
+            "overline": "Florals",
+            "heading": "Botanical Prints",
+            "cta": "Shop florals"
+          }
+        },
+        "t3": {
+          "type": "tile",
+          "settings": {
+            "overline": "Guide",
+            "heading": "The Art of Tying",
+            "cta": "Explore"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "settings": {
+        "overline": "Collections",
+        "heading": "Explore Vespera",
+        "color_scheme": "scheme-3"
+      }
+    },
+    "image_text": {
+      "type": "image-with-text",
+      "settings": {
+        "layout": "left",
+        "overline": "The House",
+        "heading": "Finished Entirely by Hand",
+        "text": "<p>Each Vespera scarf is printed on 100% silk twill and finished with a hand-rolled edge \u2014 the mark of a piece made to last and to be passed on.</p>",
+        "cta_label": "Our craftsmanship"
+      }
+    },
+    "collection_list": {
+      "type": "collection-list",
+      "blocks": {
+        "c1": {
+          "type": "item",
+          "settings": {
+            "title": "Silk Squares"
+          }
+        },
+        "c2": {
+          "type": "item",
+          "settings": {
+            "title": "Monograms"
+          }
+        },
+        "c3": {
+          "type": "item",
+          "settings": {
+            "title": "Florals"
+          }
+        },
+        "c4": {
+          "type": "item",
+          "settings": {
+            "title": "Gifts"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {
+        "overline": "Shop by Category",
+        "heading": "Find Your Scarf",
+        "columns": 4
+      }
+    },
+    "rich_text": {
+      "type": "rich-text",
+      "settings": {
+        "alignment": "center",
+        "overline": "Our Promise",
+        "heading": "Quiet Luxury, Made to Last",
+        "text": "<p>Limited editions in pure silk \u2014 conceived to be worn, gifted, and treasured for years.</p>",
+        "cta_label": "Read our story",
+        "color_scheme": "scheme-accent"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "new_arrivals",
+    "editorial",
+    "image_text",
+    "collection_list",
+    "rich_text"
+  ]
+}

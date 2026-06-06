@@ -1,0 +1,18 @@
+<section class="section account">
+  <div class="page-width account__narrow">
+    <header class="section-heading"><h1>{{ 'customer.register.title' | t }}</h1></header>
+    {%- form 'create_customer' -%}
+      {{ form.errors | default_errors }}
+      <div class="field"><label>{{ 'customer.register.first_name' | t }}</label><input type="text" name="customer[first_name]"></div>
+      <div class="field"><label>{{ 'customer.register.last_name' | t }}</label><input type="text" name="customer[last_name]"></div>
+      <div class="field"><label>{{ 'customer.login.email' | t }}</label><input type="email" name="customer[email]" required></div>
+      <div class="field"><label>{{ 'customer.login.password' | t }}</label><input type="password" name="customer[password]" required></div>
+      <button type="submit" class="btn" style="width:100%">{{ 'customer.register.submit' | t }}</button>
+    {%- endform -%}
+    <p class="account__alt"><a href="{{ routes.account_login_url }}" class="link-underline">{{ 'customer.login.submit' | t }}</a></p>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Customer register", "settings": [] }
+{% endschema %}

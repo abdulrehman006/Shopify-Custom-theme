@@ -1,0 +1,37 @@
+{%- liquid
+  assign img = product.featured_media
+  assign img_alt = product.media[1]
+  assign card_sizes = '(max-width: 749px) 50vw, 25vw'
+-%}
+<div class="card reveal">
+  <a href="{{ product.url }}" class="card__link" aria-label="{{ product.title | escape }}">
+    <div class="card__media">
+      {%- if product.compare_at_price > product.price -%}
+        <span class="card__badge">{{ 'products.product.on_sale' | t }}</span>
+      {%- elsif product.tags contains 'new' -%}
+        <span class="card__badge">{{ 'products.product.new' | t | default: 'New' }}</span>
+      {%- endif -%}
+      {%- if img != blank -%}
+        {% render 'image', image: img, sizes: card_sizes, widths: '300,350,450,600,700,1000', alt: product.title %}
+        {%- if settings.card_hover_second_image and img_alt != blank -%}
+          {% render 'image', image: img_alt, sizes: card_sizes, widths: '300,350,450,600,700', alt: '', class: 'card__img--alt' %}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+  </a>
+  <div class="card__info">
+    {%- if settings.card_show_vendor and product.vendor != blank -%}<p class="card__vendor">{{ product.vendor }}</p>{%- endif -%}
+    <h3 class="card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    <div class="card__price">{% render 'price', product: product %}</div>
+    {%- if settings.card_quick_add and product.available and product.has_only_default_variant -%}
+      <form action="{{ routes.cart_add_url }}" method="post" data-quick-add="true" class="card__quick-add">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" class="card__quick-btn">{{ 'products.product.add_to_cart' | t }}</button>
+      </form>
+    {%- elsif settings.card_quick_add and product.available -%}
+      <a href="{{ product.url }}" class="card__quick-btn card__quick-btn--link">{{ 'products.product.choose_options' | t | default: 'Choose options' }}</a>
+    {%- endif -%}
+  </div>
+</div>

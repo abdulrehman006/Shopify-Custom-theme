@@ -1,0 +1,31 @@
+<section class="section account">
+  <div class="page-width account__narrow">
+    <header class="account__head"><h1>{{ 'customer.addresses.title' | t }}</h1><a href="{{ routes.account_url }}" class="link-underline">{{ 'customer.account.title' | t }}</a></header>
+
+    {%- paginate customer.addresses by 5 -%}
+      <div class="account__address-new">
+        <h2>{{ 'customer.addresses.add' | t }}</h2>
+        {%- form 'customer_address', customer.new_address -%}
+          <div class="field"><label>{{ 'customer.register.first_name' | t }}</label><input type="text" name="address[first_name]"></div>
+          <div class="field"><label>{{ 'customer.register.last_name' | t }}</label><input type="text" name="address[last_name]"></div>
+          <div class="field"><label>Address</label><input type="text" name="address[address1]"></div>
+          <div class="field"><label>City</label><input type="text" name="address[city]"></div>
+          <div class="field"><label>Country</label><input type="text" name="address[country]"></div>
+          <div class="field"><label>ZIP</label><input type="text" name="address[zip]"></div>
+          <button type="submit" class="btn">{{ 'customer.addresses.add' | t }}</button>
+        {%- endform -%}
+      </div>
+
+      {%- for address in customer.addresses -%}
+        <div class="account__address">
+          {%- if address == customer.default_address -%}<span class="overline">{{ 'customer.addresses.default' | t }}</span>{%- endif -%}
+          <p>{{ address.name }}<br>{{ address.street }}<br>{{ address.city }} {{ address.zip }}<br>{{ address.country }}</p>
+        </div>
+      {%- endfor -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Customer addresses", "settings": [] }
+{% endschema %}

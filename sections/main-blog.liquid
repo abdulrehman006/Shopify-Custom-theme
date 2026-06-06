@@ -1,0 +1,54 @@
+<section class="section main-blog color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <header class="section-heading"><p class="overline">Journal</p><h1>{{ blog.title }}</h1></header>
+    {%- paginate blog.articles by 9 -%}
+    <div class="blog__grid">
+      {%- for article in blog.articles -%}
+        <a href="{{ article.url }}" class="blog__card reveal">
+          <div class="blog__media">
+            {%- if article.image -%}<img src="{{ article.image | image_url: width: 800 }}" alt="{{ article.image.alt | default: article.title | escape }}" loading="lazy" width="{{ article.image.width }}" height="{{ article.image.height }}">
+            {%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder' }}{%- endif -%}
+          </div>
+          <div class="blog__body">
+            <p class="blog__date">{{ article.published_at | date: '%B %d, %Y' }}</p>
+            <h2 class="blog__heading">{{ article.title }}</h2>
+            <p class="blog__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 22 }}</p>
+            <span class="link-underline">{{ 'blogs.article.read_more' | t }}</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination">
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>{%- else -%}<span class="current">{{ part.title }}</span>{%- endif -%}
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+{% stylesheet %}
+.blog__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 40px); }
+.blog__media { aspect-ratio: 3/2; overflow: hidden; background: var(--color-bg-alt); }
+.blog__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
+.blog__card:hover .blog__media img { transform: scale(1.04); }
+.blog__date { font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-text-muted); margin: 16px 0 8px; }
+.blog__heading { font-size: 1.3rem; margin: 0 0 10px; }
+.blog__excerpt { color: var(--color-text-muted); font-size: 0.92rem; }
+@media (max-width: 989px) { .blog__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .blog__grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "Blog",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,145 @@
+{%- liquid
+  assign product = product
+  assign current = product.selected_or_first_available_variant
+-%}
+<section class="section main-product color-{{ section.settings.color_scheme }}" data-gallery>
+  <div class="page-width">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a><span>/</span>
+      {%- if collection -%}<a href="{{ collection.url }}">{{ collection.title }}</a><span>/</span>{%- endif -%}
+      {{ product.title }}
+    </nav>
+
+    <div class="product">
+      <!-- Gallery -->
+      <div class="product__gallery">
+        <div class="product__main" data-gallery-main>
+          {%- if product.featured_media != blank -%}
+            <img src="{{ product.featured_media | image_url: width: 1200 }}" alt="{{ product.featured_media.alt | default: product.title | escape }}" loading="eager" width="1200" height="1500">
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+          {%- endif -%}
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="product__thumbs">
+            {%- for media in product.media -%}
+              <button class="product__thumb {% if forloop.first %}is-active{% endif %}" data-gallery-thumb data-full="{{ media | image_url: width: 1200 }}" aria-label="View image {{ forloop.index }}">
+                <img src="{{ media | image_url: width: 160 }}" alt="" loading="lazy" width="160" height="200">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Info -->
+      <div class="product__info">
+        {%- if product.vendor != blank -%}<p class="product__vendor">{{ product.vendor }}</p>{%- endif -%}
+        <h1 class="product__title">{{ product.title }}</h1>
+        <div class="product__price" data-product-price>{% render 'price', product: product, variant: current %}</div>
+
+        {%- form 'product', product, data-product-form: 'true', class: 'product__form' -%}
+          <script type="application/json" data-variant-json>
+            [{%- for v in product.variants -%}{ "id": {{ v.id }}, "options": {{ v.options | json }}, "price": {{ v.price }}, "available": {{ v.available }} }{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+          </script>
+
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="product__option field">
+                <label>{{ option.name }}</label>
+                <select data-option-selector name="options[{{ option.name | escape }}]">
+                  {%- for value in option.values -%}
+                    <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          <input type="hidden" name="id" value="{{ current.id }}">
+
+          <div class="product__qty field">
+            <label>{{ 'products.product.quantity' | t }}</label>
+            <input type="number" name="quantity" value="1" min="1">
+          </div>
+
+          <button type="submit" class="btn product__add" data-add-to-cart data-label-add="{{ 'products.product.add_to_cart' | t }}" data-label-soldout="{{ 'products.product.sold_out' | t }}" {% unless current.available %}disabled{% endunless %}>
+            {%- if current.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+          </button>
+        {%- endform -%}
+
+        {%- if product.description != blank -%}
+          <div class="product__description">
+            <h2 class="product__desc-heading">{{ 'products.product.description' | t }}</h2>
+            <div class="rte">{{ product.description }}</div>
+          </div>
+        {%- endif -%}
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'collapsible' -%}
+            <details class="product__accordion" {{ block.shopify_attributes }}>
+              <summary>{{ block.settings.heading }}{% render 'icon', name: 'plus' %}</summary>
+              <div class="rte">{{ block.settings.content }}</div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+.product { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(28px, 4vw, 72px); align-items: start; }
+.product__main img { width: 100%; object-fit: cover; aspect-ratio: 4/5; }
+.product__thumbs { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+.product__thumb { width: 70px; padding: 0; border: 1px solid transparent; background: none; }
+.product__thumb.is-active { border-color: var(--color-text); }
+.product__info { position: sticky; top: calc(var(--header-height) + 20px); }
+.product__vendor { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-text-muted); }
+.product__title { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 6px 0 14px; }
+.product__price { font-size: 1.15rem; margin-bottom: 28px; }
+.product__form { border-top: 1px solid var(--color-line); padding-top: 24px; }
+.product__qty input { max-width: 110px; }
+.product__add { width: 100%; margin-top: 8px; }
+.product__description { margin-top: 36px; }
+.product__desc-heading { font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.product__accordion { border-top: 1px solid var(--color-line); padding: 16px 0; }
+.product__accordion summary { display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; list-style: none; }
+.product__accordion summary::-webkit-details-marker { display: none; }
+.product__accordion summary svg { width: 14px; height: 14px; transition: transform var(--transition); }
+.product__accordion[open] summary svg { transform: rotate(45deg); }
+@media (max-width: 749px) { .product { grid-template-columns: 1fr; } .product__info { position: static; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collapsible",
+      "name": "Collapsible row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Shipping & Returns"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Complimentary shipping and returns on all orders.</p>"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

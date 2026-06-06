@@ -1,0 +1,26 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "Complimentary shipping across Canada \u2022 Hand-rolled silk",
+        "link": ""
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "menu": "main-menu",
+        "show_search": true,
+        "show_account": true,
+        "show_wishlist": true
+      }
+    }
+  },
+  "order": [
+    "announcement",
+    "header"
+  ]
+}

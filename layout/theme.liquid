@@ -1,0 +1,78 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}" dir="{% if settings.text_direction == 'rtl' %}rtl{% else %}ltr{% endif %}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="{{ settings.color_schemes['scheme-1'].settings.background | default: '#faf8f1' }}">
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.shopify.com">
+
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
+  {%- endif -%}
+
+  <title>{{ page_title }}{% if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+
+  {% render 'meta-tags' %}
+  {% render 'structured-data' %}
+
+  <script>document.documentElement.className = document.documentElement.className.replace('no-js','js');</script>
+
+  {%- if settings.heading_font and settings.body_font -%}
+    {{ settings.heading_font | font_face: font_display: 'swap' }}
+    {{ settings.body_font | font_face: font_display: 'swap' }}
+  {%- endif -%}
+
+  {%- comment -%} Color schemes (Shopify standard) {%- endcomment -%}
+  <style>
+    {%- for scheme in settings.color_schemes -%}
+      {%- assign s = scheme.settings -%}
+      .color-{{ scheme.id }} {
+        --color-bg: {{ s.background }};
+        --color-bg-alt: {{ s.background_alt }};
+        --color-text: {{ s.text }};
+        --color-text-muted: {{ s.text | color_modify: 'alpha', 0.62 }};
+        --color-line: {{ s.text | color_modify: 'alpha', 0.14 }};
+        --color-accent: {{ s.accent }};
+        --color-button: {{ s.button }};
+        --color-button-text: {{ s.button_label }};
+        background-color: var(--color-bg);
+        color: var(--color-text);
+      }
+    {%- endfor -%}
+    :root {
+      --font-heading: {{ settings.heading_font.family }}, {{ settings.heading_font.fallback_families }};
+      --font-body: {{ settings.body_font.family }}, {{ settings.body_font.fallback_families }};
+      --font-heading-weight: {{ settings.heading_font.weight | default: 400 }};
+      --font-body-weight: {{ settings.body_font.weight | default: 400 }};
+      --page-width: {{ settings.page_width }}px;
+      --radius: {{ settings.button_radius }}px;
+      --section-spacing: {{ settings.section_spacing | default: 110 }}px;
+      --body-scale: {{ settings.body_scale | default: 100 | divided_by: 100.0 }};
+    }
+  </style>
+
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+
+  {{ content_for_header }}
+</head>
+<body class="color-scheme-1 template-{{ request.page_type | handle }}{% if settings.animations_enabled %} animations-enabled{% endif %}">
+  <a class="skip-to-content visually-hidden" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+  {% sections 'header-group' %}
+
+  <main id="MainContent" class="content-for-layout" role="main" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+
+  {% sections 'footer-group' %}
+
+  {%- if settings.cart_type == 'drawer' -%}{% section 'cart-drawer' %}{%- endif -%}
+
+  <div class="overlay" data-overlay hidden></div>
+
+  <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+</body>
+</html>

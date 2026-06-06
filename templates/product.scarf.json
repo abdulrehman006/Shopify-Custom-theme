@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "composition": { "type": "collapsible", "settings": { "heading": "Composition & Care", "content": "<p>100% silk. Dry clean only. Store flat or rolled, away from direct sunlight.</p>" } },
+        "dimensions": { "type": "collapsible", "settings": { "heading": "Dimensions", "content": "<p>91 x 91 cm. Hand-rolled edge.</p>" } },
+        "shipping": { "type": "collapsible", "settings": { "heading": "Shipping & Returns", "content": "<p>Complimentary shipping across Canada. Returns accepted within 14 days on unworn items in original packaging.</p>" } }
+      },
+      "block_order": ["composition", "dimensions", "shipping"]
+    }
+  },
+  "order": ["main"]
+}

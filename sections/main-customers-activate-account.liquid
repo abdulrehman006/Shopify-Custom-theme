@@ -1,0 +1,16 @@
+<section class="section account">
+  <div class="page-width account__narrow">
+    <header class="section-heading"><h1>Activate account</h1></header>
+    {%- form 'activate_customer_password' -%}
+      {{ form.errors | default_errors }}
+      <div class="field"><label>{{ 'customer.login.password' | t }}</label><input type="password" name="customer[password]" required></div>
+      <div class="field"><label>Confirm password</label><input type="password" name="customer[password_confirmation]" required></div>
+      <button type="submit" class="btn" style="width:100%">Activate</button>
+      <button type="submit" name="decline" class="link-underline" style="background:none;border:0;margin-top:14px">Decline</button>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Customer activate", "settings": [] }
+{% endschema %}

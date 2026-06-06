@@ -1,0 +1,148 @@
+{%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+<section class="section main-collection color-{{ section.settings.color_scheme }}">
+  <div class="page-width">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a><span>/</span>{{ collection.title }}
+    </nav>
+
+    <header class="collection-header">
+      <h1>{{ collection.title }}</h1>
+      {%- if collection.description != blank and section.settings.show_description -%}
+        <div class="collection-header__desc rte">{{ collection.description }}</div>
+      {%- endif -%}
+    </header>
+
+    <div class="collection-toolbar">
+      <span class="collection-toolbar__count">{{ 'collections.general.items_count' | t: count: collection.products_count }}</span>
+      {%- if section.settings.show_sorting -%}
+        <form class="collection-toolbar__sort">
+          <label class="visually-hidden" for="SortBy">{{ 'collections.general.sort_by' | t }}</label>
+          <select name="sort_by" id="SortBy" onchange="this.form.submit()">
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
+            {%- endfor -%}
+          </select>
+          {%- for f in collection.filters -%}{%- for v in f.active_values -%}<input type="hidden" name="{{ v.param_name }}" value="{{ v.value }}">{%- endfor -%}{%- endfor -%}
+        </form>
+      {%- endif -%}
+    </div>
+
+    {%- paginate collection.products by section.settings.products_per_page -%}
+    <div class="collection-layout">
+      {%- if section.settings.show_filters and collection.filters.size > 0 -%}
+        <aside class="collection-filters">
+          <form>
+            {%- for filter in collection.filters -%}
+              <details class="filter-group" open>
+                <summary>{{ filter.label }}{% render 'icon', name: 'chevron' %}</summary>
+                <ul class="filter-values">
+                  {%- for value in filter.values -%}
+                    <li>
+                      <label class="filter-value">
+                        <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} onchange="this.form.submit()">
+                        <span>{{ value.label }} ({{ value.count }})</span>
+                      </label>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </details>
+            {%- endfor -%}
+            {%- if sort_by -%}<input type="hidden" name="sort_by" value="{{ sort_by }}">{%- endif -%}
+          </form>
+        </aside>
+      {%- endif -%}
+
+      <div class="collection-results">
+        {%- if collection.products.size > 0 -%}
+          <div class="product-grid" style="--cols: {{ section.settings.columns }}">
+            {%- for product in collection.products -%}
+              {% render 'product-card', product: product %}
+            {%- endfor -%}
+          </div>
+          {%- if paginate.pages > 1 -%}
+            <nav class="pagination" aria-label="Pagination">
+              {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">{% render 'icon', name: 'chevron' %}</a>{%- endif -%}
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>
+                {%- else -%}<span class="current">{{ part.title }}</span>{%- endif -%}
+              {%- endfor -%}
+              {%- if paginate.next -%}<a href="{{ paginate.next.url }}">{% render 'icon', name: 'chevron' %}</a>{%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- else -%}
+          <p class="collection-empty">{{ 'collections.general.no_products' | t }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% stylesheet %}
+.collection-header { text-align: center; max-width: 640px; margin: 12px auto clamp(24px, 4vw, 48px); }
+.collection-header__desc { color: var(--color-text-muted); }
+.collection-toolbar { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-block: 1px solid var(--color-line); }
+.collection-toolbar__count { font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-muted); }
+.collection-toolbar__sort select { width: auto; border: 0; padding-right: 24px; background: transparent; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.collection-layout { display: grid; grid-template-columns: 230px 1fr; gap: 48px; margin-top: 36px; }
+.collection-filters { position: sticky; top: calc(var(--header-height) + 16px); align-self: start; }
+.filter-group { border-bottom: 1px solid var(--color-line); padding: 14px 0; }
+.filter-group summary { display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; list-style: none; }
+.filter-group summary::-webkit-details-marker { display: none; }
+.filter-group summary svg { width: 14px; height: 14px; }
+.filter-values { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; }
+.filter-value { display: flex; align-items: center; gap: 8px; text-transform: none; letter-spacing: 0; font-size: 0.85rem; color: var(--color-text); cursor: pointer; }
+.filter-value input { width: auto; }
+.collection-empty { text-align: center; padding: 60px 0; }
+@media (max-width: 989px) { .collection-layout { grid-template-columns: 1fr; } .collection-filters { position: static; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filters",
+      "label": "Show filters",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sorting",
+      "label": "Show sorting",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}

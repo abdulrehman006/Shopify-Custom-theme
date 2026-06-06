@@ -1,0 +1,9 @@
+<section class="section text-center">
+  <div class="page-width account__narrow">
+    <p class="overline">{{ shop.name }}</p>
+    <h1>Gift Card</h1>
+    <p style="font-size:2rem">{{ gift_card.balance | money }}</p>
+    <p class="card__vendor" style="margin-top:20px">Code</p>
+    <p style="letter-spacing:0.2em;font-size:1.1rem">{{ gift_card.code | format_code }}</p>
+  </div>
+</section>

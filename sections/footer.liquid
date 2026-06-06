@@ -1,0 +1,106 @@
+<footer class="footer" role="contentinfo">
+  <div class="page-width">
+    <div class="footer__cols">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'menu' -%}
+            <div class="footer__col" {{ block.shopify_attributes }}>
+              <h3 class="footer__heading">{{ block.settings.heading }}</h3>
+              {%- if block.settings.menu != blank -%}
+                <ul class="footer__links">
+                  {%- for link in linklists[block.settings.menu].links -%}
+                    <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+          {%- when 'text' -%}
+            <div class="footer__col" {{ block.shopify_attributes }}>
+              <h3 class="footer__heading">{{ block.settings.heading }}</h3>
+              <div class="footer__rte rte">{{ block.settings.text }}</div>
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+
+      <div class="footer__col footer__col--social">
+        <h3 class="footer__heading">{{ 'general.social.follow' | t }}</h3>
+        <ul class="footer__social">
+          {%- if settings.social_instagram != blank -%}<li><a href="{{ settings.social_instagram }}" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a></li>{%- endif -%}
+          {%- if settings.social_facebook != blank -%}<li><a href="{{ settings.social_facebook }}" aria-label="Facebook">{% render 'icon', name: 'facebook' %}</a></li>{%- endif -%}
+          {%- if settings.social_pinterest != blank -%}<li><a href="{{ settings.social_pinterest }}" aria-label="Pinterest">{% render 'icon', name: 'pinterest' %}</a></li>{%- endif -%}
+          {%- if settings.social_youtube != blank -%}<li><a href="{{ settings.social_youtube }}" aria-label="YouTube">{% render 'icon', name: 'youtube' %}</a></li>{%- endif -%}
+          {%- if settings.social_linkedin != blank -%}<li><a href="{{ settings.social_linkedin }}" aria-label="LinkedIn">{% render 'icon', name: 'linkedin' %}</a></li>{%- endif -%}
+          {%- if settings.social_tiktok != blank -%}<li><a href="{{ settings.social_tiktok }}" aria-label="TikTok">{% render 'icon', name: 'tiktok' %}</a></li>{%- endif -%}
+        </ul>
+        {%- if section.settings.show_country_selector and localization.available_countries.size > 1 -%}
+          <form method="post" action="{{ routes.cart_url }}/update" class="footer__locale">
+            <select name="country_code" onchange="this.form.submit()" aria-label="Country">
+              {%- for country in localization.available_countries -%}
+                <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>{{ country.name }} ({{ country.currency.iso_code }})</option>
+              {%- endfor -%}
+            </select>
+            <input type="hidden" name="return_to" value="{{ request.path }}">
+          </form>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copy">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.copyright_text }}</p>
+      <p class="footer__payment">{{ powered_by_link }}</p>
+    </div>
+  </div>
+</footer>
+
+{% stylesheet %}
+.footer { background: var(--color-bg-alt); border-top: 1px solid var(--color-line); padding-block: clamp(48px, 6vw, 80px) 28px; }
+.footer__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 40px; }
+.footer__heading { font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 18px; }
+.footer__links { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.footer__links a { font-size: 0.85rem; color: var(--color-text-muted); }
+.footer__links a:hover { color: var(--color-text); }
+.footer__rte { font-size: 0.85rem; color: var(--color-text-muted); }
+.footer__social { list-style: none; margin: 0 0 20px; padding: 0; display: flex; gap: 14px; }
+.footer__social svg { width: 20px; height: 20px; }
+.footer__locale select { max-width: 240px; }
+.footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: clamp(40px, 5vw, 64px); padding-top: 24px; border-top: 1px solid var(--color-line); }
+.footer__bottom p { margin: 0; font-size: 0.72rem; letter-spacing: 0.08em; color: var(--color-text-muted); }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "checkbox", "id": "show_country_selector", "label": "Show country selector", "default": true },
+    { "type": "text", "id": "copyright_text", "label": "Copyright text", "default": "All rights reserved." }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Customer Care" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "About" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Crafted with care.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        { "type": "menu", "settings": { "heading": "Customer Care" } },
+        { "type": "menu", "settings": { "heading": "Company" } },
+        { "type": "menu", "settings": { "heading": "Legal" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
