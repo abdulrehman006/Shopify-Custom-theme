@@ -6,10 +6,12 @@
 <div class="card reveal">
   <a href="{{ product.url }}" class="card__link" aria-label="{{ product.title | escape }}">
     <div class="card__media">
-      {%- if product.compare_at_price > product.price -%}
-        <span class="card__badge">{{ 'products.product.on_sale' | t }}</span>
-      {%- elsif product.tags contains 'new' -%}
-        <span class="card__badge">{{ 'products.product.new' | t | default: 'New' }}</span>
+      {%- if settings.card_show_badges -%}
+        {%- if product.compare_at_price > product.price -%}
+          <span class="card__badge">{{ 'products.product.on_sale' | t }}</span>
+        {%- elsif product.tags contains 'new' -%}
+          <span class="card__badge">{{ 'products.product.new' | t | default: 'New' }}</span>
+        {%- endif -%}
       {%- endif -%}
       {%- if img != blank -%}
         {% render 'image', image: img, sizes: card_sizes, widths: '300,350,450,600,700,1000', alt: product.title %}

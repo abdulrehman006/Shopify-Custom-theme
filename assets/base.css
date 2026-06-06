@@ -27,7 +27,7 @@
   --body-scale: 1;
   --section-spacing: 110px;
 
-  --header-height: 76px;
+  --header-height: 84px;
   --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -42,9 +42,9 @@ body {
   color: var(--color-text);
   font-family: var(--font-body);
   font-weight: var(--font-body-weight);
-  font-size: calc(15px * var(--body-scale));
-  line-height: 1.7;
-  letter-spacing: 0.01em;
+  font-size: calc(14px * var(--body-scale));
+  line-height: 1.75;
+  letter-spacing: 0.006em;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -61,14 +61,14 @@ button { font-family: inherit; cursor: pointer; }
 h1, h2, h3, h4, h5 {
   font-family: var(--font-heading);
   font-weight: var(--font-heading-weight);
-  line-height: 1.15;
-  letter-spacing: 0.01em;
+  line-height: 1.1;
+  letter-spacing: 0.002em;
   margin: 0 0 0.5em;
 }
 
-h1 { font-size: clamp(2rem, 5vw, 3.4rem); }
-h2 { font-size: clamp(1.6rem, 3.2vw, 2.4rem); }
-h3 { font-size: clamp(1.2rem, 2vw, 1.6rem); }
+h1 { font-size: clamp(2.4rem, 5.5vw, 4.2rem); }
+h2 { font-size: clamp(1.9rem, 3.4vw, 2.9rem); }
+h3 { font-size: clamp(1.25rem, 2vw, 1.65rem); }
 
 p { margin: 0 0 1em; }
 
@@ -83,11 +83,11 @@ p { margin: 0 0 1em; }
 
 /* Eyebrow / overline label */
 .overline {
-  font-size: 0.72rem;
-  letter-spacing: 0.28em;
+  font-size: 0.66rem;
+  letter-spacing: 0.34em;
   text-transform: uppercase;
   color: var(--color-text-muted);
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 /* ---------- Buttons ---------- */
@@ -96,9 +96,9 @@ p { margin: 0 0 1em; }
   align-items: center;
   justify-content: center;
   gap: 0.5em;
-  padding: 14px 34px;
-  font-size: 0.72rem;
-  letter-spacing: 0.22em;
+  padding: 15px 40px;
+  font-size: 0.66rem;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
   border: 1px solid var(--color-button);
   background: var(--color-button);
@@ -117,14 +117,14 @@ p { margin: 0 0 1em; }
 
 .link-underline {
   display: inline-block;
-  font-size: 0.72rem;
-  letter-spacing: 0.22em;
+  font-size: 0.66rem;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
-  padding-bottom: 4px;
+  padding-bottom: 6px;
   border-bottom: 1px solid currentColor;
   transition: var(--transition);
 }
-.link-underline:hover { opacity: 0.6; }
+.link-underline:hover { opacity: 0.55; }
 
 /* ---------- Forms ---------- */
 input, select, textarea {
@@ -154,14 +154,14 @@ label { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; c
 }
 
 /* ---------- Section heading block ---------- */
-.section-heading { text-align: center; max-width: 640px; margin: 0 auto clamp(28px, 4vw, 56px); }
+.section-heading { text-align: center; max-width: 600px; margin: 0 auto clamp(36px, 5vw, 72px); }
 .section-heading p { color: var(--color-text-muted); }
 
 /* ---------- Product grid / cards ---------- */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(var(--cols, 4), 1fr);
-  gap: clamp(16px, 2vw, 28px) clamp(12px, 1.4vw, 20px);
+  gap: clamp(36px, 4vw, 64px) clamp(18px, 2vw, 32px);
 }
 .card { position: relative; }
 .card__media {
@@ -179,9 +179,9 @@ label { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; c
   position: absolute; inset: 0; opacity: 0;
 }
 .card:hover .card__img--alt { opacity: 1; }
-.card__info { padding-top: 14px; text-align: center; }
-.card__vendor { font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-text-muted); }
-.card__title { font-family: var(--font-body); font-size: 0.92rem; margin: 5px 0; letter-spacing: 0.02em; }
+.card__info { padding-top: 18px; text-align: center; }
+.card__vendor { font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 6px; }
+.card__title { font-family: var(--font-body); font-size: 0.86rem; font-weight: 400; margin: 4px 0 6px; letter-spacing: 0.04em; }
 .card__price { font-size: 0.9rem; color: var(--color-text); }
 .price__sale { color: #9c3b2e; }
 .price__compare { text-decoration: line-through; color: var(--color-text-muted); margin-right: 8px; }

@@ -77,7 +77,7 @@
         "type": "font_picker",
         "id": "heading_font",
         "label": "Heading font",
-        "default": "times_new_roman_n4"
+        "default": "eb_garamond_n4"
       },
       {
         "type": "header",
@@ -168,6 +168,12 @@
     "settings": [
       {
         "type": "checkbox",
+        "id": "card_show_badges",
+        "label": "Show NEW / SALE badges",
+        "default": false
+      },
+      {
+        "type": "checkbox",
         "id": "card_hover_second_image",
         "label": "Show second image on hover",
         "default": true
@@ -182,7 +188,7 @@
         "type": "checkbox",
         "id": "card_quick_add",
         "label": "Enable quick add to cart",
-        "default": true
+        "default": false
       }
     ]
   },

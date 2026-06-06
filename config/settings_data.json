@@ -42,19 +42,20 @@
         }
       }
     },
-    "heading_font": "times_new_roman_n4",
+    "heading_font": "eb_garamond_n4",
     "body_font": "assistant_n4",
     "body_scale": 100,
     "page_width": 1440,
-    "section_spacing": 110,
+    "section_spacing": 130,
     "button_radius": 0,
     "text_direction": "ltr",
     "animations_enabled": true,
     "card_hover_second_image": true,
     "card_show_vendor": false,
-    "card_quick_add": true,
+    "card_quick_add": false,
     "cart_type": "drawer",
-    "cart_show_note": true
+    "cart_show_note": true,
+    "card_show_badges": false
   },
   "presets": {
     "Vespera": {}

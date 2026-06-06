@@ -6,30 +6,22 @@
         "b1": {
           "type": "button",
           "settings": {
-            "label": "Shop the Collection",
-            "style": "btn--light"
-          }
-        },
-        "b2": {
-          "type": "button",
-          "settings": {
-            "label": "The Monograms",
-            "style": "btn--ghost"
+            "label": "Discover the collection",
+            "style": "link-underline"
           }
         }
       },
       "block_order": [
-        "b1",
-        "b2"
+        "b1"
       ],
       "settings": {
         "height": "large",
-        "overline": "Silk Scarves",
-        "heading": "Vespera",
-        "subheading": "Hand-rolled silk squares, made in limited editions.",
+        "overline": "High Summer \u00b7 Silk",
+        "heading": "Mediterranea",
+        "subheading": "A meditation on light, linen and the sea.",
         "content_position": "center",
         "text_color": "#ffffff",
-        "overlay_opacity": 30
+        "overlay_opacity": 28
       }
     },
     "new_arrivals": {
