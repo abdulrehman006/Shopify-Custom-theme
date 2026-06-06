@@ -1,0 +1,16 @@
+# Normalize line endings to LF for all text files (Shopify theme standard).
+# Prevents the noisy CRLF working-tree diffs seen on Windows checkouts.
+* text=auto eol=lf
+
+# Binary assets — never normalize.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.webp binary
+*.woff  binary
+*.woff2 binary
+*.eot   binary
+*.ttf   binary
+*.otf   binary

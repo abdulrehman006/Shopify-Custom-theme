@@ -54,7 +54,7 @@ shopify theme check                                    # run Shopify's linter
 
 1. **Logo / favicon** — a bundled wordmark shows by default. Override it in **Customize → Theme settings → Brand & SEO**. Set the favicon and default social share image there too.
 2. **Navigation** — in **Settings → Navigation**, create a menu with handle `main-menu` (nested items power the mega-menu). Create footer menus and assign them in the footer section.
-3. **Products** — import `Vespera-products-import.csv` via **Products → Import**, then upload product images. Assign the **`scarf`** product template to get the Composition / Dimensions / Shipping rows.
+3. **Products** — import `Vespera-products-import.csv` via **Products → Import**. It includes the **Vespera Monogram** sample product (Olive and Cream, $145, 91 × 91 cm) already set to the **`scarf`** template (`Template Suffix: scarf`), so the Composition / Dimensions / Shipping rows appear automatically. The CSV ships without an image URL — after import, open the product and upload `assets/product-vespera-monogram.jpg` (included in this repo) as its image. Set the store currency to **CAD** under **Settings → Store details** so prices show as `$145 CAD`.
 4. **Collections** — create collections and assign them to the homepage *Featured Collection* and *Collection List* sections.
 5. **Contact page** — create a page and assign the **`contact`** template for the contact form.
 

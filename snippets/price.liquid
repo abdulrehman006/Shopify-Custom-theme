@@ -11,7 +11,8 @@
     <span class="price__compare">{{ compare | money }}</span>
   {%- endif -%}
   {%- if product.price_varies and variant == nil -%}
-    <span class="price__current">{{ 'products.product.from_price' | t: price: price | money }}</span>
+    {%- assign price_money = price | money -%}
+    <span class="price__current">{{ 'products.product.from_price' | t: price: price_money }}</span>
   {%- else -%}
     <span class="price__current{% if compare > price %} price__sale{% endif %}">{{ price | money }}</span>
   {%- endif -%}

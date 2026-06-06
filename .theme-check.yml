@@ -1,0 +1,10 @@
+# Shopify Theme Check configuration
+# Docs: https://shopify.dev/docs/storefronts/themes/tools/theme-check
+extends: theme-check:recommended
+
+# Vespera ships a shared design-system stylesheet (assets/base.css) alongside
+# per-section {% stylesheet %} blocks — the same approach Shopify's Dawn uses.
+# ValidScopedCSSClass assumes every class is defined in the section's own
+# {% stylesheet %}, so it flags the shared classes. Disabled intentionally.
+ValidScopedCSSClass:
+  enabled: false

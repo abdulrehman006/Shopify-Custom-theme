@@ -1,4 +1,4 @@
-/* SOLOMEO theme — lightweight interactions (vanilla JS, no deps) */
+/* Vespera theme — lightweight interactions (vanilla JS, no deps) */
 (function () {
   'use strict';
 
@@ -138,7 +138,7 @@
     if (wrap && html != null) wrap.innerHTML = html;
   }
   function updateCount() {
-    fetch(window.Shopify ? '/cart.js' : '/cart.js', { headers: { 'Accept': 'application/json' } })
+    fetch('/cart.js', { headers: { 'Accept': 'application/json' } })
       .then(function (r) { return r.json(); })
       .then(function (cart) {
         document.querySelectorAll('[data-cart-count]').forEach(function (el) {
