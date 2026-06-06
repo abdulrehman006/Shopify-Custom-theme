@@ -20,10 +20,9 @@
 
   <script>document.documentElement.className = document.documentElement.className.replace('no-js','js');</script>
 
-  {%- if settings.heading_font and settings.body_font -%}
-    {{ settings.heading_font | font_face: font_display: 'swap' }}
-    {{ settings.body_font | font_face: font_display: 'swap' }}
-  {%- endif -%}
+  {%- comment -%} .family is only present on a font drop; guards against a non-font value (e.g. partial upload) so font_face never hard-errors {%- endcomment -%}
+  {%- if settings.heading_font.family -%}{{ settings.heading_font | font_face: font_display: 'swap' }}{%- endif -%}
+  {%- if settings.body_font.family -%}{{ settings.body_font | font_face: font_display: 'swap' }}{%- endif -%}
 
   {%- comment -%} Color schemes (Shopify standard) {%- endcomment -%}
   <style>
